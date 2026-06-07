@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mod Compatibility · Paralives Modding Wiki</title>
+<meta name="description" content="A community-maintained list of Paralives mods and whether they currently work.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!--
+  ============================================================================
+  MOD COMPATIBILITY PAGE
+  ----------------------------------------------------------------------------
+  You do NOT edit the mods here. Everything — every mod, its status, its notes,
+  its category — lives in ONE file:  assets/content.js  (the "mods" list near
+  the bottom). Open that, find the mod, change its  status:  and  notes:.
+  Set each mod's  status:  to "No Known Issues", "Minor Issues", "Bugged" or
+  "Untested" and the coloured label + filters update by themselves.
+  ============================================================================
+-->
+<body>
+<div class="layout">
+<main class="content">
+
+  <header class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Community Tracker</span>
+      <h1>Mod Compatibility</h1>
+      <p>Which mods currently work, which are bugged, and which need a fix. This is community-maintained — if a mod
+        behaves differently for you, let us know in the Discord so we can keep it accurate.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="searchbar mod-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <input id="mod-search" type="text" placeholder="Search mods by name or creator…" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="mod-controls">
+      <div class="ctl-row">
+        <span class="ctl-label">Status</span>
+        <div id="mod-filters" class="mod-filters"></div>
+      </div>
+      <div class="ctl-row">
+        <span class="ctl-label">Category</span>
+        <div id="cat-filters" class="mod-filters"></div>
+      </div>
+      <div class="ctl-row sub-row">
+        <span class="ctl-label">Sub-category</span>
+        <div class="sub-wrap">
+          <select id="sub-filter" class="sub-select"></select>
+        </div>
+        <label class="nsfw-toggle"><input id="nsfw-toggle" type="checkbox"> <span>Show 18+ mods</span></label>
+      </div>
+    </div>
+
+    <div class="mod-resultbar">
+      <span id="mod-count" class="mod-count"></span>
+      <button id="mod-reset" class="mod-reset" hidden>Clear filters</button>
+    </div>
+
+    <div id="mods-list" class="mod-list"></div>
+
+    <div class="mod-more-wrap">
+      <button id="mod-more" class="mod-more" hidden></button>
+    </div>
+
+    <div class="cta card">
+      <div>
+        <h2>Tested a mod?</h2>
+        <p>Help keep this list trustworthy. Tell us what you tried, the game version, and whether it worked —
+          we'll add it or update its status.</p>
+      </div>
+      <a class="btn-discord" href="https://discord.gg/Paralives" target="_blank" rel="noopener">Report in Discord ↗</a>
+    </div>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>Compatibility changes with every patch — when in doubt, check the mod's own page.</span>
+      <span><a href="index.html">← Back to Home</a></span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<style>
+.mod-search{margin-bottom:16px;}
+.mod-controls{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;}
+.ctl-row{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+.ctl-label{flex-shrink:0;width:96px;padding-top:9px;font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);}
+.mod-filters{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0;}
+.mod-filter{font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--text-soft);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:border-color .12s,color .12s,background .12s;display:flex;align-items:center;gap:7px;}
+.mod-filter:hover{border-color:var(--blue-600);color:var(--blue-600);}
+.mod-filter.on{background:var(--navy-800);border-color:var(--navy-800);color:#fff;}
+.mod-filter .dot{width:9px;height:9px;border-radius:50%;background:var(--fc,#bbb);flex-shrink:0;}
+.mod-filter.on .dot{box-shadow:0 0 0 2px rgba(255,255,255,.35);}
+.mod-filter .fcount{opacity:.6;font-size:12px;}
+
+.sub-row{align-items:center;}
+.sub-wrap{flex:1;min-width:180px;max-width:360px;}
+.sub-select{width:100%;font-family:var(--font-display);font-weight:600;font-size:13.5px;color:var(--navy-800);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:9px 13px;cursor:pointer;transition:border-color .15s,box-shadow .15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2352617a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;}
+.sub-select:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 4px rgba(61,133,198,.16);}
+.sub-select:disabled{color:var(--text-faint);background-color:#f4f6fa;cursor:default;}
+.nsfw-toggle{display:flex;align-items:center;gap:7px;font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text-soft);cursor:pointer;user-select:none;white-space:nowrap;}
+.nsfw-toggle input{width:16px;height:16px;accent-color:var(--blue-600);cursor:pointer;}
+
+.mod-resultbar{display:flex;align-items:center;gap:14px;margin-bottom:18px;min-height:22px;}
+.mod-reset{font-family:var(--font-display);font-weight:700;font-size:12.5px;color:var(--blue-600);background:none;border:none;cursor:pointer;padding:0;}
+.mod-reset:hover{text-decoration:underline;}
+.mod-more-wrap{display:flex;justify-content:center;margin-top:22px;}
+.mod-more{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--navy-800);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px 26px;cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .15s,transform .1s,color .15s;}
+.mod-more:hover{border-color:var(--blue-400);color:var(--blue-600);transform:translateY(-1px);}
+.mod-count{font-size:13.5px;color:var(--text-faint);}
+
+.mod-list{display:flex;flex-direction:column;gap:14px;}
+.mod-card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:20px 22px;border-left:5px solid var(--sc,var(--acc-purple));}
+.mod-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
+.mod-name{font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--navy-800);line-height:1.35;}
+.mod-name a{color:inherit;}
+.mod-name a:hover{color:var(--blue-600);}
+.mod-status{margin-left:auto;font-family:var(--font-display);font-weight:700;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 11px;border-radius:999px;white-space:nowrap;}
+.mod-meta{display:flex;gap:8px 16px;flex-wrap:wrap;margin-top:7px;font-size:13.5px;color:var(--text-soft);}
+.mod-meta b{color:var(--text);font-weight:600;}
+.mod-cat{display:inline-flex;align-items:center;font-family:var(--font-display);font-weight:600;font-size:12px;color:var(--text-soft);background:#f1f3f6;border:1px solid var(--line);border-radius:6px;padding:2px 9px;}
+.mod-subtag{display:inline-flex;align-items:center;font-family:var(--font-display);font-weight:600;font-size:12px;color:var(--blue-600);background:var(--sky-100);border:1px solid #cfe0f3;border-radius:6px;padding:2px 9px;}
+.mod-nsfw{display:inline-flex;align-items:center;font-family:var(--font-display);font-weight:700;font-size:10.5px;letter-spacing:.05em;color:#b3261e;background:#fbe2e0;border:1px solid #f3c6c2;border-radius:6px;padding:2px 7px;}
+.mod-notes{margin-top:13px;font-size:14.5px;color:var(--text);line-height:1.65;}
+.mod-link{display:inline-block;margin-top:12px;font-family:var(--font-display);font-weight:700;font-size:13.5px;color:var(--blue-600);}
+.mod-link:hover{text-decoration:underline;}
+.mod-empty{color:var(--text-faint);font-style:italic;font-size:15px;padding:30px 4px;text-align:center;}
+
+.cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:38px;padding:28px 32px;background:linear-gradient(120deg,#16213E,#0F3460);border:none;color:#fff;}
+.cta h2{color:#fff;font-size:21px;margin-bottom:7px;}
+.cta p{color:#cfe0f3;margin:0;max-width:60ch;font-size:14.5px;}
+.btn-discord{flex-shrink:0;font-family:var(--font-display);font-weight:700;background:#5865F2;color:#fff;padding:13px 22px;border-radius:12px;box-shadow:0 8px 20px rgba(88,101,242,.4);transition:transform .12s;}
+.btn-discord:hover{text-decoration:none;transform:translateY(-2px);}
+@media (max-width:760px){.cta{flex-direction:column;align-items:flex-start;}.mod-status{margin-left:0;}.ctl-label{width:100%;padding-top:0;}.ctl-row{gap:8px;}.sub-row{align-items:flex-start;}}
+</style>
+
+<!-- The wiki's content (everything, including ALL mods) is in this one file. -->
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var listEl    = document.getElementById('mods-list');
+  var filterEl  = document.getElementById('mod-filters');
+  var catEl     = document.getElementById('cat-filters');
+  var subEl     = document.getElementById('sub-filter');
+  var countEl   = document.getElementById('mod-count');
+  var searchEl  = document.getElementById('mod-search');
+  var nsfwEl    = document.getElementById('nsfw-toggle');
+  var resetEl   = document.getElementById('mod-reset');
+  var moreEl    = document.getElementById('mod-more');
+
+  // ---- Statuses (the coloured pill + which status filter a mod falls under) ----
+  var STATUS = {
+    'no known issues': { label:'No Known Issues', color:'#357a2b', bg:'#e3f3e1', bd:'#bfe3b8' },
+    'minor issues':    { label:'Minor Issues',    color:'#9a6a00', bg:'#fff2d6', bd:'#f0dca6' },
+    'bugged':          { label:'Bugged',          color:'#b3261e', bg:'#fbe2e0', bd:'#f3c6c2' },
+    'untested':        { label:'Untested',        color:'#5e4b9a', bg:'#efeaf8', bd:'#ddd2ee' }
+  };
+  var STATUS_ORDER = ['no known issues','minor issues','bugged','untested'];
+  var ALIAS = { 'working':'no known issues', 'no issues':'no known issues',
+                'broken':'bugged', 'outdated':'untested', '':'untested' };
+  function keyOf(s){
+    var k = String(s||'').trim().toLowerCase();
+    if(ALIAS[k]) k = ALIAS[k];
+    return STATUS[k] ? k : 'untested';
+  }
+
+  // ---- Categories (the new Category filter) + their accent colours ----
+  var CAT = {
+    'Build/Buy':      '#F1C232',
+    'Paramaker':      '#45818E',
+    'Live Mode':      '#3D85C6',
+    'Visual':         '#8E7CC3',
+    'UI/Translation': '#3C78D8',
+    'Uncategorized':  '#7b8794'
+  };
+  function catColor(c){ return CAT[c] || '#7b8794'; }
+  function splitSubs(s){
+    return String(s||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean);
+  }
+
+  // ---- Build the mod list. Everything lives in assets/content.js (one source). ----
+  var mods = (window.WIKI_CONTENT && window.WIKI_CONTENT.mods || []).map(function(m){
+    var parts = String(m.category||'').split('·');
+    var cat = (parts[0]||'').trim();
+    var subStr = parts.slice(1).join('·').trim();
+    if(!cat) cat = 'Uncategorized';
+    return {
+      name: m.name||'', creator: m.creator||'', link: m.link||'',
+      key: keyOf(m.status), category: CAT[cat] ? cat : cat,
+      subs: splitSubs(subStr), notes: m.notes||'', nsfw: m.nsfw===true
+    };
+  });
+
+  if(!mods.length){
+    listEl.innerHTML = '<div class="mod-empty">Could not load the mod list.</div>';
+    return;
+  }
+
+  // ---- State ----
+  var fStatus = 'all', fCat = 'all', fSub = 'all', query = '', showNsfw = false;
+  var PAGE = 40, shownCount = PAGE;
+
+  // Does a mod pass every active filter EXCEPT the one named in `ignore`?
+  // Used both for the real list and for the live counts next to each pill.
+  function pass(m, ignore){
+    if(!showNsfw && m.nsfw) return false;
+    if(ignore!=='status' && fStatus!=='all' && m.key!==fStatus) return false;
+    if(ignore!=='cat'    && fCat!=='all'    && m.category!==fCat) return false;
+    if(ignore!=='sub'    && fSub!=='all'    && m.subs.indexOf(fSub)<0) return false;
+    if(ignore!=='query'  && query){
+      var hay = (m.name+' '+m.creator).toLowerCase();
+      if(hay.indexOf(query)<0) return false;
+    }
+    return true;
+  }
+
+  function renderStatusFilters(){
+    var counts = {};
+    mods.forEach(function(m){ if(pass(m,'status')) counts[m.key]=(counts[m.key]||0)+1; });
+    var total = STATUS_ORDER.reduce(function(a,k){ return a+(counts[k]||0); },0);
+    var h = '<button class="mod-filter'+(fStatus==='all'?' on':'')+'" data-f="all">All <span class="fcount">'+total+'</span></button>';
+    STATUS_ORDER.forEach(function(k){
+      var s = STATUS[k];
+      h += '<button class="mod-filter'+(fStatus===k?' on':'')+'" data-f="'+k+'" style="--fc:'+s.color+'">'+
+           '<span class="dot"></span>'+s.label+' <span class="fcount">'+(counts[k]||0)+'</span></button>';
+    });
+    filterEl.innerHTML = h;
+    filterEl.querySelectorAll('.mod-filter').forEach(function(b){
+      b.addEventListener('click', function(){ fStatus=b.getAttribute('data-f'); refresh(); });
+    });
+  }
+
+  function renderCatFilters(){
+    var counts = {};
+    mods.forEach(function(m){ if(pass(m,'cat')) counts[m.category]=(counts[m.category]||0)+1; });
+    var total = Object.keys(counts).reduce(function(a,k){ return a+counts[k]; },0);
+    var h = '<button class="mod-filter'+(fCat==='all'?' on':'')+'" data-f="all">All <span class="fcount">'+total+'</span></button>';
+    Object.keys(CAT).forEach(function(c){
+      if(!counts[c] && fCat!==c) return; // hide empty categories (unless selected)
+      h += '<button class="mod-filter'+(fCat===c?' on':'')+'" data-f="'+c+'" style="--fc:'+catColor(c)+'">'+
+           '<span class="dot"></span>'+c+' <span class="fcount">'+(counts[c]||0)+'</span></button>';
+    });
+    catEl.innerHTML = h;
+    catEl.querySelectorAll('.mod-filter').forEach(function(b){
+      b.addEventListener('click', function(){
+        fCat = b.getAttribute('data-f');
+        fSub = 'all'; // sub-categories depend on the chosen category
+        refresh();
+      });
+    });
+  }
+
+  function renderSubFilter(){
+    // Count sub-tags within everything that passes the other filters.
+    var counts = {};
+    mods.forEach(function(m){
+      if(!pass(m,'sub')) return;
+      m.subs.forEach(function(t){ counts[t]=(counts[t]||0)+1; });
+    });
+    var tags = Object.keys(counts).sort(function(a,b){
+      return counts[b]-counts[a] || a.localeCompare(b);
+    });
+    if(!tags.length){
+      subEl.innerHTML = '<option value="all">No sub-categories</option>';
+      subEl.disabled = true;
+      fSub = 'all';
+      return;
+    }
+    subEl.disabled = false;
+    var total = tags.reduce(function(a,t){ return a+counts[t]; },0);
+    if(fSub!=='all' && !counts[fSub]) fSub='all'; // chosen sub no longer valid
+    var h = '<option value="all">All sub-categories ('+tags.length+')</option>';
+    tags.forEach(function(t){
+      h += '<option value="'+WIKI.escape(t)+'"'+(fSub===t?' selected':'')+'>'+WIKI.escape(t)+' ('+counts[t]+')</option>';
+    });
+    subEl.innerHTML = h;
+  }
+
+  function renderList(){
+    var shown = mods.filter(function(m){ return pass(m,null); });
+    var filtersOn = (fStatus!=='all'||fCat!=='all'||fSub!=='all'||query||showNsfw);
+    resetEl.hidden = !filtersOn;
+
+    var bits = [];
+    bits.push(shown.length.toLocaleString());
+    var label = shown.length===1 ? ' mod' : ' mods';
+    var ctx = [];
+    if(fStatus!=='all') ctx.push(STATUS[fStatus].label);
+    if(fCat!=='all') ctx.push(fCat);
+    if(fSub!=='all') ctx.push(fSub);
+    countEl.textContent = shown.length.toLocaleString()+label+(ctx.length?' · '+ctx.join(' · '):'');
+
+    if(!shown.length){
+      listEl.innerHTML = '<div class="mod-empty">No mods match these filters.</div>';
+      moreEl.hidden = true;
+      return;
+    }
+    var slice = shown.slice(0, shownCount);
+    listEl.innerHTML = slice.map(cardHTML).join('');
+
+    if(shown.length > shownCount){
+      moreEl.hidden = false;
+      moreEl.textContent = 'Show more (' + (shown.length-shownCount).toLocaleString() + ' more)';
+    } else {
+      moreEl.hidden = true;
+    }
+  }
+
+  function cardHTML(m){
+    var s = STATUS[m.key];
+    var title = m.link
+      ? '<a href="'+m.link+'" target="_blank" rel="noopener">'+WIKI.escape(m.name)+'</a>'
+      : WIKI.escape(m.name);
+
+    var top = '<span class="mod-name">'+title+'</span>';
+    if(m.nsfw) top += '<span class="mod-nsfw">18+</span>';
+    top += '<span class="mod-status" style="color:'+s.color+';background:'+s.bg+';border:1px solid '+s.bd+'">'+s.label+'</span>';
+
+    var meta = [];
+    if(m.creator) meta.push('<span>By <b>'+WIKI.escape(m.creator)+'</b></span>');
+    if(m.category) meta.push('<span class="mod-cat" style="color:'+catColor(m.category)+'">'+WIKI.escape(m.category)+'</span>');
+    m.subs.forEach(function(t){ meta.push('<span class="mod-subtag">'+WIKI.escape(t)+'</span>'); });
+    var metaHTML = meta.length ? '<div class="mod-meta">'+meta.join('')+'</div>' : '';
+
+    var notes = m.notes ? '<div class="mod-notes">'+WIKI.rich(m.notes)+'</div>' : '';
+    var link  = m.link ? '<a class="mod-link" href="'+m.link+'" target="_blank" rel="noopener">Open on Steam Workshop ↗</a>' : '';
+
+    return '<div class="mod-card" style="--sc:'+s.color+'">'+
+      '<div class="mod-top">'+top+'</div>'+ metaHTML + notes + link +
+    '</div>';
+  }
+
+  // Re-render everything (counts depend on each other, so redo all of them).
+  function refresh(){
+    shownCount = PAGE;
+    renderStatusFilters();
+    renderCatFilters();
+    renderSubFilter();
+    renderList();
+  }
+
+  // ---- Wire up the controls ----
+  var t;
+  searchEl.addEventListener('input', function(){
+    clearTimeout(t);
+    t = setTimeout(function(){ query = searchEl.value.trim().toLowerCase(); refresh(); }, 140);
+  });
+  subEl.addEventListener('change', function(){ fSub = subEl.value; shownCount=PAGE; renderList(); renderStatusFilters(); renderCatFilters(); });
+  nsfwEl.addEventListener('change', function(){ showNsfw = nsfwEl.checked; refresh(); });
+  moreEl.addEventListener('click', function(){ shownCount += PAGE*2; renderList(); });
+  resetEl.addEventListener('click', function(){
+    fStatus='all'; fCat='all'; fSub='all'; query=''; showNsfw=false;
+    searchEl.value=''; nsfwEl.checked=false;
+    refresh();
+  });
+
+  refresh();
+})();
+</script>
+</body>
+</html>

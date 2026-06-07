@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Info &amp; Tips · Paralives Modding Wiki</title>
+<meta name="description" content="Quick community tips for modding Paralives — Build Mode, the Paramaker, Live Mode and more.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!--
+  ============================================================================
+  INFO & TIPS PAGE
+  ----------------------------------------------------------------------------
+  You do NOT edit the tips here. To add, change, or remove a tip or a whole
+  topic, open  assets/content.js  and edit the "tips" list.
+  ============================================================================
+-->
+<body>
+<div class="layout">
+<main class="content">
+
+  <header class="page-head has-photo" style="--ph-img:url('assets/img/town1.jpg')">
+    <div class="wrap">
+      <span class="eyebrow">Good to Know</span>
+      <h1>Info &amp; Tips</h1>
+      <p>Short, practical tips collected from the community — the kind of things that save you an afternoon of head-scratching.</p>
+      <div class="stat-row">
+        <div class="stat"><b id="tipcount">17</b><span>Tips</span></div>
+        <div class="stat"><b id="seccount">5</b><span>Topics</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="tips-sections"></div>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>Got a tip worth sharing? Drop it in the <a href="https://discord.gg/Paralives" target="_blank" rel="noopener">Paralives Discord</a>.</span>
+      <span><a href="index.html">← Back to Home</a></span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<style>
+.tips-topic{margin-top:40px;}
+.tt-head{display:flex;align-items:center;gap:13px;margin-bottom:18px;}
+.tt-icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;background:var(--tc,var(--sky-100));box-shadow:var(--shadow-sm);}
+.tt-head h2{font-size:22px;}
+.tips-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.tip{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;gap:13px;align-items:flex-start;}
+.tip.wide{grid-column:1/-1;}
+.tip .star{flex-shrink:0;width:26px;height:26px;border-radius:8px;background:var(--tc,var(--sky-100));color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;margin-top:1px;}
+.tip-body{min-width:0;}
+.tip-text{font-size:15px;line-height:1.6;color:var(--text);}
+.tip-note{margin-top:9px;font-size:13px;color:var(--text-soft);background:var(--sky-50);border:1px dashed #c4d8f2;border-radius:9px;padding:7px 12px;}
+.tip-note b{color:var(--navy-700);}
+.tip-figure{margin:14px 0 0;}
+.tip-figure img{max-width:100%;border-radius:11px;border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.tip-figure figcaption{font-size:12px;color:var(--text-faint);margin-top:5px;}
+.tip.advert{background:linear-gradient(120deg,#fff,#f3f8ff);border-style:solid;}
+@media (max-width:760px){.tips-grid{grid-template-columns:1fr;}}
+</style>
+
+<!-- The wiki's content (all tips) is loaded from this one file. -->
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('tips-sections');
+  var meta={
+    'General':{icon:'⚙️',c:'#3D85C6'},
+    'Build Mode':{icon:'🛠️',c:'#93C47D'},
+    'Paramaker':{icon:'🧑‍🎨',c:'#45818E'},
+    'Live Mode':{icon:'🎮',c:'#8E7CC3'},
+    'Other Resources/Advert':{icon:'📦',c:'#F6B26B'}
+  };
+  var imgFile={image33:{f:'tip-applytransforms.jpg',cap:'For the last time… apply transforms! 😼'},image38:{f:'tip-decimate.jpg',cap:'Please decimate your mesh in Blender 🐱'}};
+
+  // Load the tips from the master config file (assets/content.js).
+  (window.WIKI_CONTENT ? Promise.resolve(window.WIKI_CONTENT.tips) : Promise.reject('content.js not loaded'))
+  .then(function(list){
+    // Map the friendly field names from content.js to the names this page uses.
+    var d = list.map(function(sec){
+      return {
+        title: sec.topic || '',
+        tips: (sec.tips || []).map(function(t){
+          return { text: t.text || '', note: t.note || '', img: t.image || '' };
+        })
+      };
+    });
+    var totalTips=0;d.forEach(function(s){totalTips+=s.tips.length;});
+    document.getElementById('tipcount').textContent=totalTips;
+    document.getElementById('seccount').textContent=d.length;
+    el.innerHTML=d.map(function(sec){
+      var m=meta[sec.title]||{icon:'✦',c:'#3D85C6'};
+      var title=sec.title==='Other Resources/Advert'?'Other Resources':sec.title;
+      var cards=sec.tips.map(function(t){
+        var isAdvert=/parafiles|emuLOAD/i.test(t.text);
+        var fig='';
+        if(t.img&&imgFile[t.img]){fig='<figure class="tip-figure"><img src="assets/img/'+imgFile[t.img].f+'" alt="'+imgFile[t.img].cap+'" loading="lazy"><figcaption>'+imgFile[t.img].cap+'</figcaption></figure>';}
+        var note=t.note?'<div class="tip-note"><b>Note:</b> '+WIKI.rich(t.note)+'</div>':'';
+        var wide=(t.text.length>140||t.img||isAdvert)?' wide':'';
+        return '<div class="tip'+wide+(isAdvert?' advert':'')+'" style="--tc:'+m.c+'">'+
+          '<span class="star">✦</span>'+
+          '<div class="tip-body"><div class="tip-text">'+WIKI.rich(t.text)+'</div>'+note+fig+'</div>'+
+        '</div>';
+      }).join('');
+      return '<section class="tips-topic"><div class="tt-head"><span class="tt-icon" style="--tc:'+m.c+'33">'+m.icon+'</span><h2>'+WIKI.escape(title)+'</h2></div><div class="tips-grid">'+cards+'</div></section>';
+    }).join('');
+  }).catch(function(err){el.innerHTML='<div class="no-results">Could not load tips ('+err+').</div>';});
+})();
+</script>
+</body>
+</html>

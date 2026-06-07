@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questions &amp; Answers · Paralives Modding Wiki</title>
+<meta name="description" content="62 community-sourced answers to common Paralives modding questions.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!--
+  ============================================================================
+  QUESTIONS & ANSWERS PAGE
+  ----------------------------------------------------------------------------
+  You do NOT edit the questions here. To add, change, or remove a question,
+  open  assets/content.js  and edit the "questions" list. The number at the
+  top of this page and the search all update by themselves.
+  ============================================================================
+-->
+<body>
+<div class="layout">
+<main class="content">
+
+  <header class="page-head has-photo" style="--ph-img:url('assets/img/town2.jpg')">
+    <div class="wrap">
+      <span class="eyebrow">Troubleshooting Guide</span>
+      <h1>Questions &amp; Answers</h1>
+      <p>The community's running list of modding problems and the fixes people have found. Search, browse, and click any
+        question to expand its answer.</p>
+      <div class="stat-row">
+        <div class="stat"><b id="qcount">62</b><span>Questions</span></div>
+        <div class="stat"><b id="acount">58</b><span>Answered</span></div>
+        <div class="stat"><b id="opencount">4</b><span>Open</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="searchbar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q-search" type="search" placeholder="Search questions & answers… (e.g. texture, UV2, color zone)" autocomplete="off">
+      <span class="count" id="q-shown"></span>
+    </div>
+
+    <div class="qa-tools">
+      <button class="link-btn" id="expand-all">Expand all</button>
+      <span class="sep">·</span>
+      <button class="link-btn" id="collapse-all">Collapse all</button>
+    </div>
+
+    <div id="qa-list" class="qa-list"></div>
+    <div id="qa-empty" class="no-results" hidden>No questions match your search.</div>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>Have an answer to an open question? Bring it to the <a href="https://discord.gg/Paralives" target="_blank" rel="noopener">Paralives Discord</a>.</span>
+      <span><a href="index.html">← Back to Home</a></span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<style>
+.qa-tools{display:flex;align-items:center;gap:8px;margin:14px 0 18px;color:var(--text-faint);font-size:13.5px;}
+.link-btn{background:none;border:none;font-family:var(--font-display);font-weight:700;color:var(--blue-500);cursor:pointer;font-size:13.5px;padding:0;}
+.link-btn:hover{text-decoration:underline;}
+.qa-list{display:flex;flex-direction:column;gap:12px;}
+.qa-item{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow .15s, border-color .15s;}
+.qa-item.open{box-shadow:var(--shadow);border-color:#c4d8f2;}
+.qa-q{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 22px;font-family:var(--font-display);font-weight:600;font-size:16.5px;color:var(--navy-800);line-height:1.4;}
+.qa-q:hover{background:var(--sky-50);}
+.qa-num{flex-shrink:0;width:30px;height:30px;border-radius:9px;background:var(--sky-100);color:var(--blue-600);display:grid;place-items:center;font-size:13px;font-weight:700;}
+.qa-item.open .qa-num{background:linear-gradient(135deg,#3D85C6,#0B5394);color:#fff;}
+.qa-chev{margin-left:auto;flex-shrink:0;width:22px;height:22px;color:var(--blue-400);transition:transform .2s;margin-top:3px;}
+.qa-item.open .qa-chev{transform:rotate(180deg);}
+.qa-body{display:none;padding:0 22px 22px 66px;}
+.qa-item.open .qa-body{display:block;animation:fade .2s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+.qa-answer{color:var(--text);font-size:15.5px;line-height:1.7;white-space:normal;}
+.qa-answer.open-q{color:var(--text-soft);font-style:italic;}
+.qa-extra{margin-top:14px;padding:13px 16px;background:var(--sky-50);border:1px dashed #c4d8f2;border-radius:11px;font-size:14.5px;color:var(--text-soft);}
+.qa-extra b{color:var(--navy-700);font-family:var(--font-display);}
+.qa-link{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-family:var(--font-display);font-weight:700;font-size:14px;color:#fff;background:linear-gradient(135deg,#3D85C6,#0B5394);padding:9px 15px;border-radius:10px;}
+.qa-link:hover{text-decoration:none;transform:translateY(-1px);}
+.qa-img{margin-top:16px;}
+.qa-img img{max-width:100%;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow-sm);cursor:zoom-in;}
+.qa-img figcaption{font-size:12.5px;color:var(--text-faint);margin-top:6px;}
+.badge-open{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--acc-purple);background:#efeaf8;border:1px solid #ddd2ee;padding:1px 8px;border-radius:999px;vertical-align:middle;font-family:var(--font-body);}
+mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
+/* lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(10,22,40,.88);display:none;place-items:center;z-index:100;padding:30px;cursor:zoom-out;}
+.lightbox.show{display:grid;}
+.lightbox img{max-width:95%;max-height:92vh;border-radius:10px;box-shadow:var(--shadow-lg);}
+@media (max-width:900px){.qa-body{padding-left:22px;}}
+</style>
+
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<!-- The wiki's content (all questions & answers) is loaded from this one file. -->
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var listEl=document.getElementById('qa-list');
+  var emptyEl=document.getElementById('qa-empty');
+  var searchEl=document.getElementById('q-search');
+  var shownEl=document.getElementById('q-shown');
+  var DATA=[];
+
+  var imgCaptions={
+    'image8':'Modding tools — Character Creator tags panel',
+    'image11':'Item variant setup in the prefab',
+    'image13':'FBX export transform settings (use as a basis in Blender)',
+    'image15':'Adding interactions in the control panel',
+    'image16':'Catalog item description fields in the modding tools',
+    'image21':'UV1 (left) vs UV2 deformation map (right)'
+  };
+  var imgFile={image8:'qa-image8.jpg',image11:'qa-image11.jpg',image13:'qa-image13.png',image15:'qa-image15.jpg',image16:'qa-image16.jpg',image21:'qa-image21.png'};
+
+  function render(items){
+    listEl.innerHTML='';
+    if(!items.length){emptyEl.hidden=false;return;}
+    emptyEl.hidden=true;
+    items.forEach(function(it){
+      var idx=it._i;
+      var div=document.createElement('div');
+      div.className='qa-item';
+      var open = !it.a;
+      var bodyHTML='';
+      if(it.a){
+        bodyHTML+='<div class="qa-answer">'+WIKI.rich(it.a)+'</div>';
+      }else{
+        bodyHTML+='<div class="qa-answer open-q">This question is still open — the community hasn\u2019t recorded an answer yet. If you know it, share it on the Discord!</div>';
+      }
+      if(it.aLink){
+        bodyHTML+='<a class="qa-link" href="'+it.aLink+'" target="_blank" rel="noopener">Open resource ↗</a>';
+      }
+      if(it.extra){
+        bodyHTML+='<div class="qa-extra"><b>Also:</b> '+WIKI.rich(it.extra)+(it.extraLink?' <a href="'+it.extraLink+'" target="_blank" rel="noopener" class="exlink">link</a>':'')+'</div>';
+      }
+      if(it.img && imgFile[it.img]){
+        bodyHTML+='<figure class="qa-img"><img src="assets/img/'+imgFile[it.img]+'" alt="'+(imgCaptions[it.img]||'')+'" loading="lazy"><figcaption>'+(imgCaptions[it.img]||'')+'</figcaption></figure>';
+      }
+      div.innerHTML=
+        '<button class="qa-q" aria-expanded="'+open+'">'+
+          '<span class="qa-num">'+(idx+1)+'</span>'+
+          '<span class="qa-qtext">'+WIKI.escape(it.q)+(it.a?'':'<span class="badge-open">open</span>')+'</span>'+
+          '<svg class="qa-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>'+
+        '</button>'+
+        '<div class="qa-body">'+bodyHTML+'</div>';
+      if(open)div.classList.add('open');
+      listEl.appendChild(div);
+    });
+    shownEl.textContent=items.length+' / '+DATA.length;
+  }
+
+  function highlight(items,term){
+    if(!term)return items;
+    return items;
+  }
+
+  function filter(){
+    var q=searchEl.value.trim().toLowerCase();
+    if(!q){render(DATA);return;}
+    var terms=q.split(/\s+/);
+    var res=DATA.filter(function(it){
+      var hay=(it.q+' '+(it.a||'')+' '+(it.extra||'')).toLowerCase();
+      return terms.every(function(t){return hay.indexOf(t)>=0;});
+    });
+    render(res);
+    // auto-open matches for quick scanning
+    if(q.length>=2){[].forEach.call(listEl.querySelectorAll('.qa-item'),function(el){el.classList.add('open');el.querySelector('.qa-q').setAttribute('aria-expanded','true');});}
+  }
+
+  listEl.addEventListener('click',function(e){
+    var btn=e.target.closest('.qa-q');if(!btn)return;
+    var item=btn.parentElement;
+    var willOpen=!item.classList.contains('open');
+    item.classList.toggle('open');
+    btn.setAttribute('aria-expanded',willOpen);
+  });
+  document.getElementById('expand-all').addEventListener('click',function(){[].forEach.call(listEl.querySelectorAll('.qa-item'),function(el){el.classList.add('open');});});
+  document.getElementById('collapse-all').addEventListener('click',function(){[].forEach.call(listEl.querySelectorAll('.qa-item'),function(el){el.classList.remove('open');});});
+  searchEl.addEventListener('input',filter);
+
+  // lightbox
+  var lb=document.getElementById('lightbox');var lbImg=lb.querySelector('img');
+  listEl.addEventListener('click',function(e){if(e.target.tagName==='IMG'){lbImg.src=e.target.src;lb.classList.add('show');}});
+  lb.addEventListener('click',function(){lb.classList.remove('show');});
+
+  // Load the questions from the master config file (assets/content.js).
+  (window.WIKI_CONTENT ? Promise.resolve(window.WIKI_CONTENT.questions) : Promise.reject('content.js not loaded'))
+  .then(function(list){
+    // Map the friendly field names used in content.js to the short names this
+    // page's code uses internally. (You edit content.js, not this.)
+    DATA = list.map(function(it, i){
+      return {
+        q: it.question || '',
+        a: it.answer || '',
+        aLink: it.link || '',
+        extra: it.alsoNote || '',
+        extraLink: it.alsoLink || '',
+        img: it.image || '',
+        _i: i
+      };
+    });
+    document.getElementById('qcount').textContent=DATA.length;
+    var answered=DATA.filter(function(x){return x.a;}).length;
+    document.getElementById('acount').textContent=answered;
+    document.getElementById('opencount').textContent=DATA.length-answered;
+    render(DATA);
+  }).catch(function(err){listEl.innerHTML='<div class="no-results">Could not load questions ('+err+').</div>';});
+})();
+</script>
+</body>
+</html>

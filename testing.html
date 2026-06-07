@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Testing &amp; Findings · Paralives Modding Wiki</title>
+<meta name="description" content="Open questions the Paralives modding community is still investigating.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!--
+  ============================================================================
+  TESTING & FINDINGS PAGE
+  ----------------------------------------------------------------------------
+  You do NOT edit the items here. To add, change, or remove a testing entry,
+  open  assets/content.js  and edit the "testing" list. Set  done: true  once
+  something is confirmed.
+  ============================================================================
+-->
+<body>
+<div class="layout">
+<main class="content">
+
+  <header class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Work in Progress</span>
+      <h1>Testing &amp; Findings</h1>
+      <p>A scratchpad for things the community is still figuring out. To use it: post your question, edit the findings
+        beside it, and mark it <b>done</b> — confirmed answers get moved over to the Questions &amp; Answers page.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="testing-list" class="test-list"></div>
+
+    <div class="cta card">
+      <div>
+        <h2>Investigating something?</h2>
+        <p>Interaction mods aren't well covered yet — if you want to help document them, please do! Share your testing
+          and findings in the community Discord.</p>
+      </div>
+      <a class="btn-discord" href="https://discord.gg/Paralives" target="_blank" rel="noopener">Join the Discord ↗</a>
+    </div>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>Confirmed a finding? It belongs on the <a href="questions.html">Questions &amp; Answers</a> page.</span>
+      <span><a href="index.html">← Back to Home</a></span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<style>
+.test-list{display:flex;flex-direction:column;gap:14px;}
+.test-card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:20px 22px;border-left:5px solid var(--sc,var(--acc-purple));}
+.test-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.tstatus{font-family:var(--font-display);font-weight:700;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 11px;border-radius:999px;}
+.tstatus.done{background:#e3f3e1;color:#357a2b;border:1px solid #bfe3b8;}
+.tstatus.testing{background:#fff2d6;color:#9a6a00;border:1px solid #f0dca6;}
+.tstatus.open{background:#efeaf8;color:#5e4b9a;border:1px solid #ddd2ee;}
+.test-q{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--navy-800);line-height:1.4;}
+.test-find{margin-top:12px;font-size:15px;color:var(--text);line-height:1.65;}
+.test-find .lbl{font-family:var(--font-display);font-weight:700;color:var(--blue-600);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:3px;}
+.test-empty{color:var(--text-faint);font-style:italic;font-size:14.5px;margin-top:10px;}
+.test-notes{margin-top:10px;font-size:13.5px;color:var(--text-soft);}
+
+.cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:38px;padding:28px 32px;background:linear-gradient(120deg,#16213E,#0F3460);border:none;color:#fff;}
+.cta h2{color:#fff;font-size:21px;margin-bottom:7px;}
+.cta p{color:#cfe0f3;margin:0;max-width:60ch;font-size:14.5px;}
+.btn-discord{flex-shrink:0;font-family:var(--font-display);font-weight:700;background:#5865F2;color:#fff;padding:13px 22px;border-radius:12px;box-shadow:0 8px 20px rgba(88,101,242,.4);transition:transform .12s;}
+.btn-discord:hover{text-decoration:none;transform:translateY(-2px);}
+@media (max-width:760px){.cta{flex-direction:column;align-items:flex-start;}}
+</style>
+
+<!-- The wiki's content (all testing notes) is loaded from this one file. -->
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var el=document.getElementById('testing-list');
+  // Load the testing notes from the master config file (assets/content.js).
+  (window.WIKI_CONTENT ? Promise.resolve(window.WIKI_CONTENT.testing) : Promise.reject('content.js not loaded'))
+  .then(function(list){
+    // Map the friendly field names from content.js to the names this page uses.
+    var d = list.map(function(t){
+      return { q: t.question || '', done: !!t.done, status: t.status || '',
+               findings: t.findings || '', fLink: t.link || '', notes: t.notes || '' };
+    });
+    el.innerHTML=d.map(function(t){
+      var state=t.done?'done':(/testing/i.test(t.status)?'testing':'open');
+      var label=t.done?'Done':(state==='testing'?'Testing':'Open question');
+      var color=t.done?'#357a2b':(state==='testing'?'#F1C232':'#8E7CC3');
+      var find='';
+      if(t.findings){
+        find='<div class="test-find"><span class="lbl">Findings</span>'+WIKI.rich(t.findings)+(t.fLink&&t.findings.indexOf(t.fLink)<0?' <a href="'+t.fLink+'" target="_blank" rel="noopener" class="exlink">link</a>':'')+'</div>';
+      }else{
+        find='<div class="test-empty">No findings recorded yet — this one\u2019s still open for investigation.</div>';
+      }
+      var notes=t.notes?'<div class="test-notes"><b>Notes:</b> '+WIKI.rich(t.notes)+'</div>':'';
+      return '<div class="test-card" style="--sc:'+color+'">'+
+        '<div class="test-top"><span class="tstatus '+state+'">'+label+'</span></div>'+
+        '<div class="test-q">'+WIKI.escape(t.q)+'</div>'+find+notes+
+      '</div>';
+    }).join('');
+  }).catch(function(err){el.innerHTML='<div class="no-results">Could not load testing items ('+err+').</div>';});
+})();
+</script>
+</body>
+</html>

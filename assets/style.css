@@ -1,0 +1,225 @@
+/* ============================================================================
+   UNOFFICIAL PARALIVES MODDING COMMUNITY WIKI  —  STYLES (the look & feel)
+   ----------------------------------------------------------------------------
+   This file controls COLOURS, FONTS and SPACING for the whole website.
+   You only need this file if you want to change how the site LOOKS.
+   To change the actual CONTENT (questions, resources, etc.) edit
+   assets/content.js instead.
+
+   HOW TO CHANGE A COLOUR (safe and easy):
+   Below is a list of named colours, each like   --blue-600:#0B5394;
+   The part after the colon ( #0B5394 ) is a "hex colour code". To recolour
+   the site, change only that code (keep the name, the colon and the
+   semicolon). You can get hex codes from any online colour picker.
+     --navy-800  = the dark sidebar / page banners
+     --blue-600  = the main accent (buttons, links, highlights)
+     --sky-50    = the soft page background
+   Change those three and most of the site re-themes itself.
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+:root{
+  /* ---- MAIN COLOURS — change the #hex codes to re-theme the site ---- */
+  /* Paralives blue scale (straight from the workbook fills) */
+  --navy-900:#0A1628;
+  --navy-800:#16213E;
+  --navy-700:#0F3460;
+  --blue-700:#093f70;
+  --blue-600:#0B5394;
+  --blue-500:#1b6fb8;
+  --blue-400:#3D85C6;
+  --blue-300:#6FA8DC;
+  --sky-200:#CFE2F3;
+  --sky-150:#DDE5F5;
+  --sky-100:#E6F2FD;
+  --sky-75:#E8EEF8;
+  --sky-50:#F5F8FF;
+  --white:#ffffff;
+
+  /* Accent palette (the section/label colors used in the sheet) */
+  --acc-pink:#D5A6BD;
+  --acc-rose:#E6B8AF;
+  --acc-orange:#F6B26B;
+  --acc-gold:#F1C232;
+  --acc-green:#93C47D;
+  --acc-teal:#45818E;
+  --acc-blue:#3D85C6;
+  --acc-royal:#3C78D8;
+  --acc-purple:#8E7CC3;
+  --acc-grey:#7b8794;
+  --acc-magenta:#ED8DED;
+
+  --text:#1d2b45;
+  --text-soft:#52617a;
+  --text-faint:#8493aa;
+  --link:#0B5394;
+  --line:#DDE5F5;
+
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-lg:24px;
+  --shadow-sm:0 1px 2px rgba(15,52,96,.06), 0 2px 8px rgba(15,52,96,.05);
+  --shadow:0 4px 16px rgba(15,52,96,.09), 0 1px 3px rgba(15,52,96,.06);
+  --shadow-lg:0 18px 48px rgba(10,22,40,.18);
+
+  --sidebar-w:268px;
+  --font-display:'Quicksand', system-ui, sans-serif;
+  --font-body:'Nunito', system-ui, sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, #eaf2fd 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #eef4fe 0%, transparent 55%),
+    var(--sky-50);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--link);text-decoration:none;}
+a:hover{text-decoration:underline;}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--navy-800);line-height:1.18;margin:0;font-weight:700;letter-spacing:-.01em;}
+::selection{background:var(--blue-300);color:#fff;}
+
+/* ---------------- Layout ---------------- */
+.layout{display:flex;min-height:100vh;}
+.content{flex:1;min-width:0;padding:0 0 80px;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px;}
+
+/* ---------------- Sidebar ---------------- */
+.sidebar{
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  background:linear-gradient(180deg,#16213E 0%, #0f2c4f 55%, #0F3460 100%);
+  color:#cfe0f3;
+  position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  padding:22px 16px;
+  border-right:1px solid #0a1c34;
+  z-index:40;
+  overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:8px;}
+.sidebar::-webkit-scrollbar-thumb{background:#274875;border-radius:8px;}
+.brand{display:flex;align-items:center;gap:12px;padding:6px 8px 18px;text-decoration:none;}
+.brand:hover{text-decoration:none;}
+.brand .mark{
+  width:46px;height:46px;border-radius:13px;flex-shrink:0;
+  background:linear-gradient(145deg,#3D85C6,#0B5394);
+  display:grid;place-items:center;
+  box-shadow:0 4px 14px rgba(11,83,148,.5), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.brand .mark svg{width:26px;height:26px;}
+.brand .btxt b{display:block;font-family:var(--font-display);font-weight:700;color:#fff;font-size:15px;line-height:1.15;}
+.brand .btxt span{display:block;font-size:11px;color:#8fb4dc;letter-spacing:.04em;text-transform:uppercase;margin-top:2px;}
+
+.nav{display:flex;flex-direction:column;gap:3px;margin-top:6px;}
+.nav .nav-label{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6f93bd;padding:14px 12px 6px;font-weight:700;}
+.nav a{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:11px;
+  color:#bcd2ec;font-weight:600;font-size:14.5px;
+  transition:background .15s, color .15s, transform .12s;
+}
+.nav a:hover{background:rgba(110,168,220,.14);color:#fff;text-decoration:none;}
+.nav a .ic{width:20px;height:20px;flex-shrink:0;opacity:.85;}
+.nav a.active{background:linear-gradient(135deg,#2a7fd4,#0B5394);color:#fff;box-shadow:0 4px 12px rgba(11,83,148,.45);}
+.nav a.active .ic{opacity:1;}
+
+.side-foot{margin-top:auto;padding-top:18px;}
+.version-card{
+  background:rgba(8,24,44,.5);
+  border:1px solid #244468;border-radius:14px;padding:13px 14px;
+}
+.version-card .vlabel{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#7ea4cf;font-weight:700;}
+.version-card .vval{font-family:var(--font-display);font-weight:700;color:#eaf3ff;font-size:14px;margin-top:3px;}
+.version-card .vpatch{font-size:12px;color:#9dbbdd;margin-top:6px;}
+.version-card .vpatch b{color:#9ad29a;}
+.side-foot .creds{font-size:11px;color:#6f8fb5;margin-top:12px;padding:0 4px;line-height:1.5;}
+.side-foot .creds a{color:#8fb4dc;}
+
+/* mobile top bar */
+.topbar{display:none;}
+.nav-toggle{display:none;}
+.scrim{display:none;}
+
+/* ---------------- Page header banner ---------------- */
+.page-head{
+  position:relative;overflow:hidden;
+  background:linear-gradient(120deg,#16213E,#0F3460 60%,#0b3f70);
+  color:#fff;padding:54px 0 46px;margin-bottom:34px;
+  border-bottom:3px solid rgba(255,255,255,.06);
+}
+.page-head.has-photo::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--ph-img);background-size:cover;background-position:center 38%;
+  opacity:.26;
+}
+.page-head::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,rgba(22,33,62,.86),rgba(15,52,96,.62));
+}
+.page-head .wrap{position:relative;z-index:2;}
+.page-head .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:600;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#9ec6ee;margin-bottom:14px;}
+.page-head h1{color:#fff;font-size:clamp(30px,4.4vw,46px);}
+.page-head p{color:#cfe0f3;max-width:64ch;margin:14px 0 0;font-size:16.5px;}
+.page-head .stat-row{display:flex;flex-wrap:wrap;gap:26px;margin-top:24px;}
+.page-head .stat b{display:block;font-family:var(--font-display);font-weight:700;font-size:26px;color:#fff;line-height:1;}
+.page-head .stat span{font-size:12.5px;color:#9ec6ee;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ---------------- Cards & generic ---------------- */
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);}
+.section-title{font-size:22px;margin:38px 0 16px;display:flex;align-items:center;gap:12px;}
+.section-title .dot{width:11px;height:11px;border-radius:50%;background:var(--blue-400);box-shadow:0 0 0 4px rgba(61,133,198,.16);}
+.muted{color:var(--text-soft);}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 11px;border-radius:999px;font-size:12px;font-weight:700;font-family:var(--font-display);}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:700;background:var(--sky-100);color:var(--blue-600);border:1px solid #cfe0f3;}
+
+/* search input */
+.searchbar{position:relative;margin:0 0 8px;}
+.searchbar input{
+  width:100%;padding:14px 16px 14px 46px;border-radius:13px;border:1.5px solid var(--line);
+  font-family:var(--font-body);font-size:15.5px;color:var(--text);background:#fff;
+  box-shadow:var(--shadow-sm);transition:border .15s, box-shadow .15s;
+}
+.searchbar input:focus{outline:none;border-color:var(--blue-400);box-shadow:0 0 0 4px rgba(61,133,198,.16);}
+.searchbar svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--blue-400);}
+.searchbar .count{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text-faint);font-weight:600;}
+
+.no-results{text-align:center;padding:60px 20px;color:var(--text-faint);font-size:16px;}
+
+/* footer */
+.site-foot{border-top:1px solid var(--line);margin-top:50px;padding:26px 0;color:var(--text-faint);font-size:13.5px;}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;}
+.site-foot a{color:var(--blue-500);font-weight:600;}
+
+/* external link icon */
+.exlink::after{content:"↗";font-size:.82em;margin-left:3px;opacity:.6;}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px){
+  :root{--sidebar-w:0;}
+  .topbar{
+    display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50;
+    background:linear-gradient(120deg,#16213E,#0F3460);color:#fff;padding:11px 16px;
+    box-shadow:var(--shadow);
+  }
+  .topbar .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(145deg,#3D85C6,#0B5394);display:grid;place-items:center;}
+  .topbar .mark svg{width:20px;height:20px;}
+  .topbar b{font-family:var(--font-display);font-size:15px;}
+  .nav-toggle{display:grid;place-items:center;margin-left:auto;width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;}
+  .sidebar{
+    position:fixed;left:0;top:0;height:100vh;width:280px;
+    transform:translateX(-100%);transition:transform .26s ease;
+    box-shadow:var(--shadow-lg);
+  }
+  body.nav-open .sidebar{transform:translateX(0);}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(10,22,40,.45);z-index:39;}
+  .wrap{padding:0 18px;}
+  .page-head{padding:38px 0 34px;margin-bottom:26px;}
+}

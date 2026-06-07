@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources &amp; Tools · Paralives Modding Wiki</title>
+<meta name="description" content="A curated directory of programs, tutorials, guides, textures, rigs and tools for modding Paralives.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!--
+  ============================================================================
+  RESOURCES & TOOLS PAGE
+  ----------------------------------------------------------------------------
+  You do NOT edit the resources here. To add, change, or remove a resource or
+  a whole category, open  assets/content.js  and edit the "resources" list.
+  ============================================================================
+-->
+<body>
+<div class="layout">
+<main class="content">
+
+  <header class="page-head has-photo" style="--ph-img:url('assets/img/town1.jpg')">
+    <div class="wrap">
+      <span class="eyebrow">Resources &amp; Tutorials</span>
+      <h1>Resources &amp; Tools</h1>
+      <p>Programs, Blender tutorials, official guides, textures, rigs, fonts and content-creation tools — all
+        community-gathered. Everything is free unless otherwise noted. The “Added by” column is entirely optional 💜</p>
+      <div class="stat-row">
+        <div class="stat"><b id="rcount">149</b><span>Resources</span></div>
+        <div class="stat"><b id="scount">9</b><span>Categories</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="searchbar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="r-search" type="search" placeholder="Search resources… (e.g. hair, UV, texture, Blender)" autocomplete="off">
+      <span class="count" id="r-shown"></span>
+    </div>
+
+    <nav class="chip-nav" id="chip-nav"></nav>
+
+    <div id="res-sections"></div>
+    <div id="res-empty" class="no-results" hidden>No resources match your search.</div>
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>Want to add a resource? Suggest it in the <a href="https://discord.gg/Paralives" target="_blank" rel="noopener">Paralives Discord</a>.</span>
+      <span><a href="index.html">← Back to Home</a></span>
+    </div>
+  </footer>
+</main>
+</div>
+
+<style>
+.chip-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;}
+.chip-nav a{font-family:var(--font-display);font-weight:600;font-size:13px;padding:7px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--text-soft);box-shadow:var(--shadow-sm);transition:transform .1s;}
+.chip-nav a:hover{text-decoration:none;transform:translateY(-2px);color:var(--navy-800);border-color:var(--cc);}
+.chip-nav a .cdot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cc);margin-right:7px;vertical-align:middle;}
+.chip-nav a .cnt{color:var(--text-faint);font-weight:700;margin-left:5px;}
+
+.res-section{margin-top:38px;scroll-margin-top:20px;}
+.rs-head{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:14px;border-bottom:2px solid var(--sky-150);}
+.rs-swatch{width:42px;height:42px;border-radius:12px;flex-shrink:0;box-shadow:var(--shadow-sm);display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--font-display);}
+.rs-head h2{font-size:22px;}
+.rs-head .rs-count{margin-left:auto;font-size:13px;color:var(--text-faint);font-weight:700;background:var(--sky-75);padding:4px 11px;border-radius:999px;}
+
+.res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.res-row{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 17px;box-shadow:var(--shadow-sm);transition:transform .1s, box-shadow .15s, border-color .15s;border-left:4px solid var(--rc,var(--blue-400));}
+.res-row:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.res-top{display:flex;align-items:flex-start;gap:10px;}
+.res-name{font-family:var(--font-display);font-weight:700;font-size:15.5px;color:var(--blue-700);line-height:1.3;}
+.res-name a{color:inherit;}
+.res-type{flex-shrink:0;margin-left:auto;font-size:11px;font-weight:700;color:var(--blue-600);background:var(--sky-100);border:1px solid #cfe0f3;padding:2px 9px;border-radius:999px;white-space:nowrap;}
+.res-meta{margin-top:7px;font-size:13px;color:var(--text-soft);display:flex;flex-wrap:wrap;gap:4px 12px;}
+.res-meta .by{color:var(--text-faint);}
+.res-meta .by b{color:var(--text-soft);}
+.res-notes{margin-top:8px;font-size:13.5px;color:var(--text-soft);line-height:1.55;}
+mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
+@media (max-width:760px){.res-grid{grid-template-columns:1fr;}}
+</style>
+
+<!-- The wiki's content (all resources) is loaded from this one file. -->
+<script src="assets/content.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var sectionsEl=document.getElementById('res-sections');
+  var chipNav=document.getElementById('chip-nav');
+  var emptyEl=document.getElementById('res-empty');
+  var searchEl=document.getElementById('r-search');
+  var shownEl=document.getElementById('r-shown');
+  var DATA=[];var TOTAL=0;
+
+  function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');}
+  function initials(s){return s.replace(/[^A-Za-z& ]/g,'').split(/\s+/).slice(0,2).map(function(w){return w[0]||'';}).join('').toUpperCase()||'•';}
+
+  function render(filter){
+    sectionsEl.innerHTML='';
+    var anyShown=0;
+    DATA.forEach(function(sec){
+      var items=sec.items.filter(function(it){
+        if(!filter)return true;
+        var hay=(it.resource+' '+it.creator+' '+it.type+' '+(it.notes||'')+' '+sec.title).toLowerCase();
+        return filter.every(function(t){return hay.indexOf(t)>=0;});
+      });
+      if(!items.length)return;
+      anyShown+=items.length;
+      var sec_=document.createElement('section');
+      sec_.className='res-section';sec_.id=slug(sec.title);
+      var color=sec.color;
+      var rows=items.map(function(it){
+        var name=it.link?'<a href="'+it.link+'" target="_blank" rel="noopener" class="exlink">'+WIKI.escape(it.resource)+'</a>':WIKI.escape(it.resource);
+        var meta='';
+        if(it.creator)meta+='<span>'+WIKI.escape(it.creator)+'</span>';
+        if(it.addedBy)meta+='<span class="by">added by <b>'+WIKI.escape(it.addedBy)+'</b></span>';
+        return '<div class="res-row" style="--rc:'+color+'">'+
+          '<div class="res-top"><span class="res-name">'+name+'</span>'+(it.type?'<span class="res-type">'+WIKI.escape(it.type)+'</span>':'')+'</div>'+
+          (meta?'<div class="res-meta">'+meta+'</div>':'')+
+          (it.notes?'<div class="res-notes">'+WIKI.rich(it.notes)+'</div>':'')+
+        '</div>';
+      }).join('');
+      sec_.innerHTML=
+        '<div class="rs-head"><span class="rs-swatch" style="background:'+color+'">'+initials(sec.title)+'</span>'+
+        '<h2>'+WIKI.escape(sec.title.replace(/ - .*$/,''))+'</h2>'+
+        '<span class="rs-count">'+items.length+' item'+(items.length>1?'s':'')+'</span></div>'+
+        '<div class="res-grid">'+rows+'</div>';
+      sectionsEl.appendChild(sec_);
+    });
+    emptyEl.hidden=anyShown>0;
+    shownEl.textContent=anyShown+' / '+TOTAL;
+  }
+
+  function buildChips(){
+    chipNav.innerHTML='';
+    DATA.forEach(function(sec){
+      var a=document.createElement('a');
+      a.href='#'+slug(sec.title);
+      a.style.setProperty('--cc',sec.color);
+      a.innerHTML='<span class="cdot"></span>'+WIKI.escape(sec.title.replace(/ - .*$/,''))+'<span class="cnt">'+sec.items.length+'</span>';
+      chipNav.appendChild(a);
+    });
+  }
+
+  searchEl.addEventListener('input',function(){
+    var q=searchEl.value.trim().toLowerCase();
+    render(q?q.split(/\s+/):null);
+    chipNav.style.display=q?'none':'flex';
+  });
+
+  // Load the resources from the master config file (assets/content.js).
+  (window.WIKI_CONTENT ? Promise.resolve(window.WIKI_CONTENT.resources) : Promise.reject('content.js not loaded'))
+  .then(function(list){
+    // Map the friendly field names from content.js to the names this page uses.
+    var d = list.map(function(sec){
+      return {
+        title: sec.category || '',
+        color: sec.color || '#3D85C6',
+        items: (sec.items || []).map(function(it){
+          return { resource: it.name || '', creator: it.creator || '', link: it.link || '',
+                   type: it.type || '', addedBy: it.addedBy || '', notes: it.notes || '' };
+        })
+      };
+    });
+    DATA=d;TOTAL=0;d.forEach(function(s){TOTAL+=s.items.length;});
+    document.getElementById('rcount').textContent=TOTAL;
+    document.getElementById('scount').textContent=d.length;
+    buildChips();render(null);
+  }).catch(function(err){sectionsEl.innerHTML='<div class="no-results">Could not load resources ('+err+').</div>';});
+})();
+</script>
+</body>
+</html>
