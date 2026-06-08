@@ -1,11 +1,4 @@
 /* ============================================================================
-   UNOFFICIAL PARALIVES MODDING COMMUNITY WIKI  —  STYLES (the look & feel)
-   ----------------------------------------------------------------------------
-   This file controls COLOURS, FONTS and SPACING for the whole website.
-   You only need this file if you want to change how the site LOOKS.
-   To change the actual CONTENT (questions, resources, etc.) edit
-   assets/content.js instead.
-
    HOW TO CHANGE A COLOUR (safe and easy):
    Below is a list of named colours, each like   --blue-600:#0B5394;
    The part after the colon ( #0B5394 ) is a "hex colour code". To recolour

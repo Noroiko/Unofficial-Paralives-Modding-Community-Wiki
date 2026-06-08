@@ -3,11 +3,6 @@
    ----------------------------------------------------------------------------
    *** THIS IS THE ONLY FILE YOU NEED TO EDIT TO UPDATE THE WEBSITE. ***
 
-   Everything the website shows — the game version, every question & answer,
-   every resource, every tip, and every testing note — lives in THIS file.
-   The home-page counters (e.g. "62 Questions answered") update by themselves
-   from the lists below, so you never have to change those numbers by hand.
-
    ----------------------------------------------------------------------------
    5 GOLDEN RULES (please read once — they prevent 99% of mistakes)
    ----------------------------------------------------------------------------
@@ -15,21 +10,17 @@
    2. Every entry must end with a comma  ,  (just like the ones already here).
    3. Keep the curly braces { } and square brackets [ ] exactly as they are.
    4. To put a link inside text, just type the full https://... address.
-   5. After editing, SAVE the file and refresh the website to see changes.
+   5. After editing, SAVE the file and push the update to see changes.
 
    TIP: The easiest and safest way to add something new is to COPY an entry
    that already exists, paste it right below, and change the words inside the
    quotes. Each section has a "HOW TO ADD" example to copy from.
-
-   If a line ever looks broken, compare it to the entries around it — the most
-   common slip-ups are a missing comma or a missing quote mark.
    ============================================================================ */
 
 window.WIKI_CONTENT = {
 
   /* ==========================================================================
-     1) GAME VERSION  —  shown on the home page and in the left sidebar.
-     Just change the text inside the quotes whenever the game updates.
+     1) GAME VERSION  —  Just change the text inside the quotes whenever the game updates.
      ========================================================================== */
   game: {
     version: "Early Access 0.1.2b.19972",   // current game version
@@ -37,9 +28,7 @@ window.WIKI_CONTENT = {
   },
 
   /* ==========================================================================
-     2) MESH COUNT  —  the "Base-game meshes" number on the home page.
-     This comes from the big Mesh Statistics reference (assets/mesh-data.js),
-     which is generated automatically. You will almost never change this.
+     2) MESH COUNT  —  Only needs a change if there is a update with new items.
      ========================================================================== */
   meshCount: 4105,
 
@@ -60,8 +49,7 @@ window.WIKI_CONTENT = {
 
      TO REORDER THE TABS: just move the lines up or down.
      TO RENAME A TAB: change the words inside its "label".
-     TO ADD A WHOLE NEW PAGE: that needs a new .html file made once — ask
-     whoever set up the site. After that, adding its tab here is all it takes.
+     TO ADD A WHOLE NEW PAGE: that needs a new .html file made once — ask me.
      ========================================================================== */
   navigation: [
     { href: "index.html",     label: "Home",                 icon: "home", group: "Wiki" },
@@ -77,7 +65,7 @@ window.WIKI_CONTENT = {
   /* ==========================================================================
      3) QUESTIONS & ANSWERS  —  shown on the "Questions & Answers" page.
 
-     Each entry looks like this (fields you can leave as "" if unused):
+     Each entry looks like this (Leave it like this -> "" <- if unused):
 
          {
            question: "The question people ask",
@@ -89,7 +77,7 @@ window.WIKI_CONTENT = {
          },
 
      HOW TO ADD A NEW QUESTION: copy the block above, paste it below as the
-     first item, and fill in your text. Leaving "answer" empty marks it "open".
+     first item. Leaving "answer" empty marks it "open".
      ========================================================================== */
   questions: [
     {
@@ -598,15 +586,17 @@ window.WIKI_CONTENT = {
 
          {
            name:    "What it is called (this is the clickable title)",
-           link:    "https://...",   // where the title links to ("" = no link)
+           link:    "https://...",   // where the title links to (empty "" = no link)
            creator: "",   // optional: who made it / the brand
            type:    "",   // optional: small label, e.g. "Tutorial"
-           addedBy: "",   // optional: who added it (totally optional)
-           notes:   ""    // optional: a sentence describing it
+           addedBy: "",   // optional: who added it (optional)
+           notes:   ""    // optional: a description
          },
 
      HOW TO ADD A NEW RESOURCE: find the category you want below, copy one of
      its items, paste it as the first item in that category, and edit the text.
+     You can either keep it as a one-liner or use the block from above.
+     The one-liner is just a little more compact.
 
      HOW TO ADD A NEW CATEGORY: copy a whole { category: ... } block and give
      it a new name. The "color" sets the accent colour (a hex code like the
@@ -833,7 +823,7 @@ window.WIKI_CONTENT = {
 
      Known topics (the website gives each its own icon): "General",
      "Build Mode", "Paramaker", "Live Mode", "Other Resources/Advert".
-     You can also invent a new topic name — it will still appear.
+     You can also create a new topic name — it will still appear.
      ========================================================================== */
   tips: [
     {
@@ -882,7 +872,6 @@ window.WIKI_CONTENT = {
 
   /* ==========================================================================
      6) TESTING & FINDINGS  —  shown on the "Testing & Findings" page.
-     These are open questions the community is still investigating.
 
      Each entry looks like this:
 
@@ -951,8 +940,6 @@ window.WIKI_CONTENT = {
 
   /* ==========================================================================
      7) MOD COMPATIBILITY  —  shown on the "Mods" page.
-     A community-maintained list of mods and whether they currently work.
-     (Imported from the community "Mod List" spreadsheet.)
 
      Each entry looks like this:
 
@@ -969,9 +956,9 @@ window.WIKI_CONTENT = {
      under. Use ONE of these (capitals do not matter):
 
          "No Known Issues" — works fine                 (green)
-         "Minor Issues"    — works but has small bugs   (amber) ← describe in notes
+         "Minor Issues"    — works but has small bugs   (amber)
          "Bugged"          — major problems / unusable  (red)
-         "Untested"        — nobody has checked yet      (purple)
+         "Untested"        — nobody has checked yet     (purple)
 
      The "category" decides the Category + Sub-category filters on the page.
      Write it as  "Main · Sub, Sub"  — the part before the · is the main
@@ -982,13 +969,11 @@ window.WIKI_CONTENT = {
      UI/Translation, Uncategorized.
 
      THIS IS THE ONLY LIST — every mod on the site lives right here, so you
-     just edit this one file. The tested mods are written out in full at the
-     top; the big imported list below them is the same data in a compact
-     one-line-per-mod form.
+     just edit this one file.
 
      HOW TO UPDATE A MOD: find it (Ctrl/Cmd+F by name), change its "status"
-     word, and type a message in its "notes". HOW TO ADD A NEW MOD: copy any
-     entry, paste it as the first item, and change the words inside the quotes.
+     word, and type a message in its "notes".
+     HOW TO ADD A NEW MOD: copy any entry, paste it as the first item, and change the words inside the quotes.
      (Optional: add  nsfw: true  to flag an 18+ mod.)
      ========================================================================== */
 mods: [
@@ -15694,15 +15679,3 @@ mods: [
   ]
 
 };
-
-/* ----------------------------------------------------------------------------
-   ADVANCED — ADDING IMAGES (optional, you can ignore this)
-   ----------------------------------------------------------------------------
-   A few questions and tips show a picture. To use one, put its name in the
-   "image" field. Pictures live in the assets/img/ folder. The ones already
-   available are:
-     For questions: "image8", "image11", "image13", "image15", "image16", "image21"
-     For tips:      "image33", "image38"
-   To add brand-new pictures you would also need to add the image file and a
-   short caption in the page files — ask whoever set up the site for help.
-   ---------------------------------------------------------------------------- */

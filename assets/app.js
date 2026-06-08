@@ -1,17 +1,4 @@
-/* ============================================================================
-   SHARED NAVIGATION  (the left sidebar + the mobile top bar)
-   ----------------------------------------------------------------------------
-   This file builds the menu that appears on every page, so the navigation
-   always looks the same. You normally do NOT need to edit it.
-
-   - The GAME VERSION shown in the sidebar comes from assets/content.js
-     (you edit it there, not here).
-   - If you ever rename a page or change the Discord link, you can do it in
-     the NAV list and the DISCORD_URL line just below.
-   ============================================================================ */
 (function () {
-  // The version shown in the sidebar comes from assets/content.js when loaded.
-  // These two lines are only a fallback in case that file is ever missing.
   var CFG = (window.WIKI_CONTENT && window.WIKI_CONTENT.game) || {};
   var GAME_VERSION = CFG.version || "Early Access 0.1.2b.19972";
   var PATCH_DATE = CFG.patchDate || "May 29, 2026";
@@ -30,11 +17,6 @@
     about: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>'
   };
 
-  // The sidebar menu. The maintainer can control this from assets/content.js
-  // (the "navigation" list). If that is missing, this built-in list is used.
-  // "icon" must be one of the names in the ICON list just above:
-  //   home, qa, res, tips, mesh, test, mods, about
-  // "group" is the small grey heading shown ABOVE an item (optional).
   var DEFAULT_NAV = [
     { href: "index.html", label: "Home", icon: "home", group: "Wiki" },
     { href: "questions.html", label: "Questions & Answers", icon: "qa" },
@@ -45,7 +27,7 @@
     { href: "testing.html", label: "Testing & Findings", icon: "test" },
     { href: "about.html", label: "About & Credits", icon: "about", group: "More" }
   ];
-  // Use the list from content.js if the maintainer provided one, else the default.
+ 
   var NAV = (window.WIKI_CONTENT && window.WIKI_CONTENT.navigation && window.WIKI_CONTENT.navigation.length)
     ? window.WIKI_CONTENT.navigation
     : DEFAULT_NAV;
