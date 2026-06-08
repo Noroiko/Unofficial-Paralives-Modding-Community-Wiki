@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Info &amp; Tips · Paralives Modding Wiki</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="description" content="Quick community tips for modding Paralives — Build Mode, the Paramaker, Live Mode and more.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -40,42 +43,41 @@
 <style>
 .tips-topic{margin-top:40px;}
 .tt-head{display:flex;align-items:center;gap:13px;margin-bottom:18px;}
-.tt-icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;background:var(--tc,var(--sky-100));box-shadow:var(--shadow-sm);}
+.tt-icon{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-size:25px;background:var(--tcbg,var(--accent-tint));}
+.tt-icon i{line-height:1;}
 .tt-head h2{font-size:22px;}
 .tips-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
-.tip{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;gap:13px;align-items:flex-start;}
+.tip{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;gap:13px;align-items:flex-start;}
 .tip.wide{grid-column:1/-1;}
-.tip .star{flex-shrink:0;width:26px;height:26px;border-radius:8px;background:var(--tc,var(--sky-100));color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700;margin-top:1px;}
+.tip .star{flex-shrink:0;width:26px;height:26px;border-radius:7px;background:var(--accent-tint);color:var(--accent);display:grid;place-items:center;font-size:14px;font-weight:700;margin-top:1px;}
 .tip-body{min-width:0;}
 .tip-text{font-size:15px;line-height:1.6;color:var(--text);}
-.tip-note{margin-top:9px;font-size:13px;color:var(--text-soft);background:var(--sky-50);border:1px dashed #c4d8f2;border-radius:9px;padding:7px 12px;}
+.tip-note{margin-top:9px;font-size:13px;color:var(--text-soft);background:var(--accent-tint);border:1px dashed var(--accent-soft);border-radius:9px;padding:7px 12px;}
 .tip-note b{color:var(--navy-700);}
 .tip-figure{margin:14px 0 0;}
 .tip-figure img{max-width:100%;border-radius:11px;border:1px solid var(--line);box-shadow:var(--shadow-sm);}
 .tip-figure figcaption{font-size:12px;color:var(--text-faint);margin-top:5px;}
-.tip.advert{background:linear-gradient(120deg,#fff,#f3f8ff);border-style:solid;}
+.tip.advert{background:var(--surface-2);border-style:solid;}
 @media (max-width:760px){.tips-grid{grid-template-columns:1fr;}}
 </style>
 
-<!-- The wiki's content (all tips) is loaded from this one file. -->
 <script src="assets/content.js"></script>
 <script src="assets/app.js"></script>
 <script>
 (function(){
   var el=document.getElementById('tips-sections');
   var meta={
-    'General':{icon:'⚙️',c:'#3D85C6'},
-    'Build Mode':{icon:'🛠️',c:'#93C47D'},
-    'Paramaker':{icon:'🧑‍🎨',c:'#45818E'},
-    'Live Mode':{icon:'🎮',c:'#8E7CC3'},
-    'Other Resources/Advert':{icon:'📦',c:'#F6B26B'}
+    'General':{icon:'ph-gear',c:'#3D85C6'},
+    'Build Mode':{icon:'ph-hammer',c:'#7BA86A'},
+    'Paramaker':{icon:'ph-paint-brush',c:'#3F7682'},
+    'Live Mode':{icon:'ph-game-controller',c:'#7E6BB0'},
+    'Other Resources/Advert':{icon:'ph-package',c:'#E0913F'}
   };
   var imgFile={image33:{f:'tip-applytransforms.jpg',cap:'For the last time… apply transforms! 😼'},image38:{f:'tip-decimate.jpg',cap:'Please decimate your mesh in Blender 🐱'}};
 
-  // Load the tips from the master config file (assets/content.js).
   (window.WIKI_CONTENT ? Promise.resolve(window.WIKI_CONTENT.tips) : Promise.reject('content.js not loaded'))
   .then(function(list){
-    // Map the friendly field names from content.js to the names this page uses.
+
     var d = list.map(function(sec){
       return {
         title: sec.topic || '',
@@ -88,7 +90,7 @@
     document.getElementById('tipcount').textContent=totalTips;
     document.getElementById('seccount').textContent=d.length;
     el.innerHTML=d.map(function(sec){
-      var m=meta[sec.title]||{icon:'✦',c:'#3D85C6'};
+      var m=meta[sec.title]||{icon:'ph-sparkle',c:'#3D85C6'};
       var title=sec.title==='Other Resources/Advert'?'Other Resources':sec.title;
       var cards=sec.tips.map(function(t){
         var isAdvert=/parafiles|emuLOAD/i.test(t.text);
@@ -101,7 +103,7 @@
           '<div class="tip-body"><div class="tip-text">'+WIKI.rich(t.text)+'</div>'+note+fig+'</div>'+
         '</div>';
       }).join('');
-      return '<section class="tips-topic"><div class="tt-head"><span class="tt-icon" style="--tc:'+m.c+'33">'+m.icon+'</span><h2>'+WIKI.escape(title)+'</h2></div><div class="tips-grid">'+cards+'</div></section>';
+      return '<section class="tips-topic"><div class="tt-head"><span class="tt-icon" style="--tcbg:'+m.c+'22;color:'+m.c+'"><i class="ph-bold '+m.icon+'"></i></span><h2>'+WIKI.escape(title)+'</h2></div><div class="tips-grid">'+cards+'</div></section>';
     }).join('');
   }).catch(function(err){el.innerHTML='<div class="no-results">Could not load tips ('+err+').</div>';});
 })();

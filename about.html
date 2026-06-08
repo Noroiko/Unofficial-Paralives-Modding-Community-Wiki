@@ -4,10 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About &amp; Credits · Paralives Modding Wiki</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="description" content="About the Unofficial Paralives Modding Community Wiki — who runs it, how to contribute, and credits.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-
 <body>
 <div class="layout">
 <main class="content">
@@ -40,7 +42,7 @@
           <li>Share answers, tutorials, tools and tips in the community Discord.</li>
           <li>Have a fix for an <a href="testing.html">open question</a>? Post it — confirmed findings get written up on the <a href="questions.html">Q&amp;A page</a>.</li>
           <li>Interaction mods aren't well covered yet. If you'd like to help document them, please do!</li>
-          <li>The “Added by” credit on resources is entirely optional 💜</li>
+          <li>The “Added by” credit on resources is entirely optional.</li>
         </ul>
       </section>
 
@@ -48,9 +50,9 @@
         <h2>Get in touch</h2>
         <p>DM <b>@grimmdrandom</b> on Discord for queries — or if you need logos.</p>
         <div class="link-stack">
-          <a href="https://discord.gg/Paralives" target="_blank" rel="noopener">💬 Paralives Discord Server</a>
-          <a href="https://www.paralives.com/press-kit" target="_blank" rel="noopener">🎨 Official Paralives Press Kit</a>
-          <a href="https://store.steampowered.com/news/app/1118520/view/693136511334353772?l=english" target="_blank" rel="noopener">📰 Latest Patch Notes (Steam)</a>
+          <a href="https://discord.gg/Paralives" target="_blank" rel="noopener"><i class="ph-bold ph-discord-logo"></i>Paralives Discord Server</a>
+          <a href="https://www.paralives.com/press-kit" target="_blank" rel="noopener"><i class="ph-bold ph-palette"></i>Official Paralives Press Kit</a>
+          <a href="https://store.steampowered.com/news/app/1118520/view/693136511334353772?l=english" target="_blank" rel="noopener"><i class="ph-bold ph-newspaper"></i>Latest Patch Notes (Steam)</a>
         </div>
       </section>
     </div>
@@ -83,7 +85,7 @@
 
   <footer class="site-foot">
     <div class="wrap">
-      <span>Made with care by the Paralives modding community 🐾</span>
+      <span>Made with care by the Paralives modding community.</span>
       <span><a href="index.html">← Back to Home</a></span>
     </div>
   </footer>
@@ -100,17 +102,18 @@
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
 .ticks li{position:relative;padding-left:30px;color:var(--text-soft);font-size:15px;line-height:1.55;}
-.ticks li::before{content:"✦";position:absolute;left:0;top:0;color:var(--blue-400);font-size:15px;}
-.contact-card{background:linear-gradient(120deg,#fff,#f3f8ff);}
+.ticks li::before{content:"✦";position:absolute;left:0;top:0;color:var(--accent);font-size:14px;}
+.contact-card{background:var(--surface-2);}
 .link-stack{display:flex;flex-direction:column;gap:9px;margin-top:14px;}
-.link-stack a{background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px 16px;font-family:var(--font-display);font-weight:600;color:var(--navy-800);box-shadow:var(--shadow-sm);transition:transform .1s, border-color .15s;}
-.link-stack a:hover{text-decoration:none;transform:translateY(-2px);border-color:var(--blue-300);}
+.link-stack a{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-family:var(--font-display);font-weight:600;color:var(--navy-800);box-shadow:var(--shadow-sm);transition:border-color .14s, background .14s;}
+.link-stack a i{font-size:20px;color:var(--accent);flex-shrink:0;}
+.link-stack a:hover{text-decoration:none;background:var(--accent-tint);border-color:var(--accent-soft);}
 .credit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
-.credit{background:var(--sky-50);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;}
+.credit{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px;}
 .credit .ctag{align-self:flex-start;font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--cc);padding:3px 10px;border-radius:999px;margin-bottom:5px;}
 .credit b{font-family:var(--font-display);font-size:16px;color:var(--navy-800);}
 .credit span:last-child{font-size:13px;color:var(--text-soft);}
-.note-card{background:linear-gradient(120deg,#fff,#fbf5ff);}
+.note-card{background:var(--surface-2);}
 .disclaimer{font-size:13px;color:var(--text-faint);line-height:1.6;padding:4px 8px;margin:6px 0 0;}
 @media (max-width:760px){.two-col{grid-template-columns:1fr;}.prose.card{padding:22px 22px;}}
 </style>

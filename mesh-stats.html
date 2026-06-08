@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mesh Statistics · Paralives Modding Wiki</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta name="description" content="Complete vertex and triangle counts for every mesh in the Paralives Main.mod — 4,105 files across 268 categories.">
 <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -59,19 +62,19 @@
 <style>
 .ms-toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;margin:18px 0 10px;}
 .group-tabs{display:flex;flex-wrap:wrap;gap:7px;}
-.group-tabs button{font-family:var(--font-display);font-weight:600;font-size:13.5px;padding:8px 15px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--text-soft);cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .1s;}
-.group-tabs button:hover{transform:translateY(-2px);}
-.group-tabs button.active{background:linear-gradient(135deg,#3D85C6,#0B5394);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(11,83,148,.35);}
+.group-tabs button{font-family:var(--font-display);font-weight:600;font-size:13.5px;padding:8px 15px;border-radius:8px;background:var(--surface);border:1px solid var(--line);color:var(--text-soft);cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .12s,color .12s,background .12s;}
+.group-tabs button:hover{border-color:var(--accent);color:var(--accent-600);}
+.group-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
 .group-tabs button .gc{opacity:.65;font-weight:700;margin-left:5px;}
 .group-tabs button.active .gc{opacity:.85;}
 .ms-tools{color:var(--text-faint);font-size:13px;display:flex;align-items:center;gap:8px;}
 
 .ms-list{display:flex;flex-direction:column;gap:8px;}
-.ms-cat{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);overflow:hidden;}
-.ms-cat.open{box-shadow:var(--shadow);}
+.ms-cat{background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow-sm);overflow:hidden;}
+.ms-cat.open{box-shadow:var(--shadow);border-color:var(--accent-soft);}
 .ms-cat-head{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:14px 18px;}
-.ms-cat-head:hover{background:var(--sky-50);}
-.ms-chev{width:20px;height:20px;color:var(--blue-400);flex-shrink:0;transition:transform .2s;}
+.ms-cat-head:hover{background:var(--surface-2);}
+.ms-chev{width:20px;height:20px;color:var(--accent);flex-shrink:0;transition:transform .2s;}
 .ms-cat.open .ms-chev{transform:rotate(90deg);}
 .ms-titleblock{min-width:0;flex:1;}
 .ms-title{font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--navy-800);}
@@ -80,17 +83,17 @@
 .ms-mini .mm{text-align:right;}
 .ms-mini .mm b{display:block;font-family:var(--font-display);font-weight:700;font-size:14.5px;color:var(--blue-600);line-height:1.1;}
 .ms-mini .mm span{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
-.ms-cat-body{display:none;border-top:1px solid var(--sky-150);}
+.ms-cat-body{display:none;border-top:1px solid var(--line);}
 .ms-cat.open .ms-cat-body{display:block;}
 
 table.mesh-tbl{width:100%;border-collapse:collapse;font-size:13.5px;}
-table.mesh-tbl th{text-align:right;font-family:var(--font-display);font-weight:700;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);padding:10px 18px;background:var(--sky-50);position:sticky;}
+table.mesh-tbl th{text-align:right;font-family:var(--font-display);font-weight:700;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);padding:10px 18px;background:var(--surface-2);position:sticky;}
 table.mesh-tbl th.l,table.mesh-tbl td.l{text-align:left;}
-table.mesh-tbl td{padding:9px 18px;text-align:right;border-top:1px solid #eef3fb;font-variant-numeric:tabular-nums;color:var(--text-soft);}
+table.mesh-tbl td{padding:9px 18px;text-align:right;border-top:1px solid var(--line-soft);font-variant-numeric:tabular-nums;color:var(--text-soft);}
 table.mesh-tbl td.l{color:var(--text);font-weight:600;word-break:break-word;}
-table.mesh-tbl tr:hover td{background:var(--sky-50);}
+table.mesh-tbl tr:hover td{background:var(--surface-2);}
 table.mesh-tbl .hi{color:var(--blue-700);}
-table.mesh-tbl tfoot td{border-top:2px solid var(--sky-150);font-weight:700;color:var(--navy-700);background:#f3f8ff;}
+table.mesh-tbl tfoot td{border-top:2px solid var(--line);font-weight:700;color:var(--navy-700);background:var(--accent-tint);}
 table.mesh-tbl tfoot td.l{font-family:var(--font-display);}
 mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
 @media (max-width:760px){
@@ -100,7 +103,6 @@ mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
 }
 </style>
 
-<!-- The big mesh-statistics reference data is loaded from this one file. -->
 <script src="assets/mesh-data.js"></script>
 <script src="assets/app.js"></script>
 <script>
@@ -172,7 +174,7 @@ mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
       var wrap=document.createElement('div');
       wrap.innerHTML=catHTML(secView);
       var cat=wrap.firstChild;
-      if(v.q){ // expand + fill when searching
+      if(v.q){
         cat.classList.add('open');
         cat.querySelector('.ms-cat-head').setAttribute('aria-expanded','true');
         cat.querySelector('.ms-cat-body').innerHTML=tableHTML(secView,v.q);
@@ -226,7 +228,6 @@ mark{background:#ffe9a8;color:inherit;padding:0 2px;border-radius:3px;}
     });
   }
 
-  // Load the mesh statistics from assets/mesh-data.js (generated reference).
   (window.WIKI_MESH ? Promise.resolve(window.WIKI_MESH) : Promise.reject('mesh-data.js not loaded'))
   .then(function(d){
     SECTIONS=d.sections;TOTALFILES=d.totals.files;
