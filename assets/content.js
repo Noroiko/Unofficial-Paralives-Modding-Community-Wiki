@@ -23,8 +23,8 @@ window.WIKI_CONTENT = {
      1) GAME VERSION  —  Just change the text inside the quotes whenever the game updates.
      ========================================================================== */
   game: {
-    version: "Early Access 0.1.2b.19972",   // current game version
-    patchDate: "May 29, 2026"               // date of the latest patch
+    version: "Early Access 0.1.3.20031",   // current game version
+    patchDate: "June 06, 2026"               // date of the latest patch
   },
 
   /* ==========================================================================
@@ -38,7 +38,7 @@ window.WIKI_CONTENT = {
 
      Each tab looks like this:
 
-         { href: "mods.html", label: "Mod Compatibility", icon: "mods", group: "Wiki" },
+         { href: "mods.html", label: "Mods", icon: "mods", group: "Wiki" },
 
        href  = the page file the tab opens (must be a real .html file).
        label = the wording shown in the sidebar.
